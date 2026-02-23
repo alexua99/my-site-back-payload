@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, PayloadRequest } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
@@ -21,6 +21,37 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+
+/** Отримати сторінку за slug: GET /api/pages/slug/home?depth=2&draft=false */
+const getBySlugHandler = async (req: PayloadRequest) => {
+  const slug = req.routeParams?.slug
+  if (typeof slug !== 'string') {
+    return new Response(JSON.stringify({ error: 'Slug is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+  const query = (req.query || {}) as Record<string, unknown>
+  const depth = typeof query.depth === 'number' ? query.depth : parseInt(String(query.depth ?? 0), 10) || 0
+  const draft = query.draft === 'true' || query.draft === true
+  const result = await req.payload.find({
+    collection: 'pages',
+    where: { slug: { equals: slug } },
+    limit: 1,
+    depth,
+    draft,
+  })
+  const doc = result.docs[0]
+  if (!doc) {
+    return new Response(JSON.stringify({ error: 'Page not found' }), {
+      status: 404,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+  return Response.json(doc, {
+    headers: { 'Content-Type': 'application/json' },
+  })
+}
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -119,6 +150,13 @@ export const Pages: CollectionConfig<'pages'> = {
       },
     },
     slugField(),
+  ],
+  endpoints: [
+    {
+      path: '/slug/:slug',
+      method: 'get',
+      handler: getBySlugHandler,
+    },
   ],
   hooks: {
     afterChange: [revalidatePage],
