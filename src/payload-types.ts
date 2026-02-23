@@ -74,6 +74,7 @@ export interface Config {
     categories: Category;
     users: User;
     brands: Brand;
+    team: Team;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -98,6 +99,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     brands: BrandsSelect<false> | BrandsSelect<true>;
+    team: TeamSelect<false> | TeamSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -866,6 +868,24 @@ export interface Brand {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team".
+ */
+export interface Team {
+  id: number;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Select position. Director positions can only have one member.
+   */
+  position: 'members' | 'director_sona_pharm' | 'director_sona_exim' | 'general_director';
+  description?: string | null;
+  image: number | Media;
+  linkidin?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1090,6 +1110,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'brands';
         value: number | Brand;
+      } | null)
+    | ({
+        relationTo: 'team';
+        value: number | Team;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1488,6 +1512,20 @@ export interface UsersSelect<T extends boolean = true> {
 export interface BrandsSelect<T extends boolean = true> {
   title?: T;
   image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team_select".
+ */
+export interface TeamSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  position?: T;
+  description?: T;
+  image?: T;
+  linkidin?: T;
   updatedAt?: T;
   createdAt?: T;
 }

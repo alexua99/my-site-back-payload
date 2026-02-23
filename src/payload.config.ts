@@ -12,11 +12,13 @@ import { News } from './collections/News'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
+import { Team } from './collections/Team'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from './fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
+import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -68,8 +70,10 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL!,
       ssl: { rejectUnauthorized: false },
     },
+    migrationDir: path.resolve(dirname, 'migrations'),
+    migrations,
   }),
-  collections: [Pages, Posts, News, Media, Categories, Users, Brands],
+  collections: [Pages, Posts, News, Media, Categories, Users, Brands, Team],
   cors: [
     getServerSideURL(),
     'http://localhost:3000',

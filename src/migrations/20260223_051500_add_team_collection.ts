@@ -1,0 +1,73 @@
+import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+
+export async function up({ db }: MigrateUpArgs): Promise<void> {
+  await db.execute(sql`
+  DO $$
+  BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_team_position') THEN
+      CREATE TYPE "public"."enum_team_position" AS ENUM('members', 'director_sona_pharm', 'director_sona_exim', 'general_director');
+    END IF;
+  END $$;
+
+  CREATE TABLE IF NOT EXISTS "team" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
+  	"subtitle" varchar,
+  	"position" varchar DEFAULT 'members' NOT NULL,
+  	"description" text,
+  	"image_id" integer,
+  	"linkidin" varchar,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+
+  DO $$
+  BEGIN
+    IF NOT EXISTS (
+      SELECT 1 FROM information_schema.columns
+      WHERE table_name = 'payload_locked_documents_rels'
+      AND column_name = 'team_id'
+    ) THEN
+      ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "team_id" integer;
+    END IF;
+  END $$;
+
+  DO $$
+  BEGIN
+    IF NOT EXISTS (
+      SELECT 1 FROM pg_constraint WHERE conname = 'team_image_id_media_id_fk'
+    ) THEN
+      ALTER TABLE "team" ADD CONSTRAINT "team_image_id_media_id_fk"
+      FOREIGN KEY ("image_id") REFERENCES "public"."media"("id")
+      ON DELETE set null ON UPDATE no action;
+    END IF;
+  END $$;
+
+  CREATE INDEX IF NOT EXISTS "team_position_idx" ON "team" USING btree ("position");
+  CREATE INDEX IF NOT EXISTS "team_updated_at_idx" ON "team" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "team_created_at_idx" ON "team" USING btree ("created_at");
+
+  DO $$
+  BEGIN
+    IF NOT EXISTS (
+      SELECT 1 FROM pg_constraint WHERE conname = 'payload_locked_documents_rels_team_fk'
+    ) THEN
+      ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_team_fk"
+      FOREIGN KEY ("team_id") REFERENCES "public"."team"("id")
+      ON DELETE cascade ON UPDATE no action;
+    END IF;
+  END $$;
+
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_team_id_idx" ON "payload_locked_documents_rels" USING btree ("team_id");
+  `)
+}
+
+export async function down({ db }: MigrateDownArgs): Promise<void> {
+  await db.execute(sql`
+  DROP TABLE IF EXISTS "team" CASCADE;
+  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT IF EXISTS "payload_locked_documents_rels_team_fk";
+  DROP INDEX IF EXISTS "payload_locked_documents_rels_team_id_idx";
+  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN IF EXISTS "team_id";
+  DROP TYPE IF EXISTS "public"."enum_team_position";
+  `)
+}
