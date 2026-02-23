@@ -13,6 +13,7 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Team } from './collections/Team'
+import { OpenJobs } from './collections/OpenJobs'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -71,7 +72,7 @@ export default buildConfig({
     },
     migrationDir: path.resolve(dirname, 'migrations'),
   }),
-  collections: [Pages, Posts, News, Media, Categories, Users, Brands, Team],
+  collections: [Pages, Posts, News, Media, Categories, Users, Brands, Team, OpenJobs],
   cors: [
     getServerSideURL(),
     'http://localhost:3000',

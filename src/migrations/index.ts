@@ -4,6 +4,7 @@ import * as migration_20260223_000623 from './20260223_000623';
 import * as migration_20260223_005639 from './20260223_005639';
 import * as migration_20260223_051500_add_team_collection from './20260223_051500_add_team_collection';
 import * as migration_20260223_054800_team_content_field from './20260223_054800_team_content_field';
+import * as migration_20260223_062000_add_open_jobs_collection from './20260223_062000_add_open_jobs_collection';
 
 export const migrations = [
   {
@@ -35,5 +36,10 @@ export const migrations = [
     up: migration_20260223_054800_team_content_field.up,
     down: migration_20260223_054800_team_content_field.down,
     name: '20260223_054800_team_content_field',
+  },
+  {
+    up: migration_20260223_062000_add_open_jobs_collection.up,
+    down: migration_20260223_062000_add_open_jobs_collection.down,
+    name: '20260223_062000_add_open_jobs_collection',
   },
 ];
