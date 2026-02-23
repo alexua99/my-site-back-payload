@@ -3,6 +3,7 @@ import * as migration_20260216_223000_add_news_images_and_short_description from
 import * as migration_20260223_000623 from './20260223_000623';
 import * as migration_20260223_005639 from './20260223_005639';
 import * as migration_20260223_043614 from './20260223_043614';
+import * as migration_20260223_045533 from './20260223_045533';
 import * as migration_20260223_051500_add_team_collection from './20260223_051500_add_team_collection';
 import * as migration_20260223_054800_team_content_field from './20260223_054800_team_content_field';
 import * as migration_20260223_062000_add_open_jobs_collection from './20260223_062000_add_open_jobs_collection';
@@ -33,6 +34,11 @@ export const migrations = [
     up: migration_20260223_043614.up,
     down: migration_20260223_043614.down,
     name: '20260223_043614',
+  },
+  {
+    up: migration_20260223_045533.up,
+    down: migration_20260223_045533.down,
+    name: '20260223_045533',
   },
   {
     up: migration_20260223_051500_add_team_collection.up,

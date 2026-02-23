@@ -909,9 +909,6 @@ export interface OpenJob {
   title: string;
   location: string;
   jobType: 'full-time' | 'part-time' | 'contract' | 'remote';
-  /**
-   * Brief overview shown in the list
-   */
   shortDescription: string;
   content: {
     root: {

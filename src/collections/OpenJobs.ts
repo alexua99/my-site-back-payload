@@ -1,7 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { authenticated } from '../access/authenticated'
 import {
-  BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
@@ -11,7 +10,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import { slugField } from 'payload'
 
-export const OpenJobs: CollectionConfig<'open-jobs'> = {
+export const OpenJobs: CollectionConfig = {
   slug: 'open-jobs',
   labels: {
     singular: 'Open Position',
@@ -32,16 +31,11 @@ export const OpenJobs: CollectionConfig<'open-jobs'> = {
       name: 'title',
       type: 'text',
       required: true,
-      label: 'Job Title',
     },
     {
       name: 'location',
       type: 'text',
       required: true,
-      label: 'Location',
-      admin: {
-        placeholder: 'e.g., Kyiv, Ukraine',
-      },
     },
     {
       name: 'jobType',
@@ -66,21 +60,15 @@ export const OpenJobs: CollectionConfig<'open-jobs'> = {
           value: 'remote',
         },
       ],
-      label: 'Job Type',
     },
     {
       name: 'shortDescription',
       type: 'textarea',
       required: true,
-      label: 'Short Description',
-      admin: {
-        description: 'Brief overview shown in the list',
-      },
     },
     {
       name: 'content',
       type: 'richText',
-      label: 'Job Description',
       required: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
