@@ -5,6 +5,7 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { Brands } from './collections/Brands'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { News } from './collections/News'
@@ -68,7 +69,7 @@ export default buildConfig({
       ssl: { rejectUnauthorized: false },
     },
   }),
-  collections: [Pages, Posts, News, Media, Categories, Users],
+  collections: [Pages, Posts, News, Media, Categories, Users, Brands],
   cors: [
     getServerSideURL(),
     'http://localhost:3000',
