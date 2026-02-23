@@ -18,6 +18,11 @@ const nextConfig = {
           protocol: url.protocol.replace(':', ''),
         }
       }),
+      // Allow images served from Vercel Blob
+      {
+        protocol: 'https',
+        hostname: '**.blob.vercel-storage.com',
+      },
     ],
   },
   webpack: (webpackConfig) => {
