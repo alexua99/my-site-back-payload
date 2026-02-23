@@ -75,6 +75,7 @@ export interface Config {
     users: User;
     brands: Brand;
     team: Team;
+    'open-jobs': OpenJob;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -100,6 +101,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     brands: BrandsSelect<false> | BrandsSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
+    'open-jobs': OpenJobsSelect<false> | OpenJobsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -900,6 +902,42 @@ export interface Team {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "open-jobs".
+ */
+export interface OpenJob {
+  id: number;
+  title: string;
+  location: string;
+  jobType: 'full-time' | 'part-time' | 'contract' | 'remote';
+  /**
+   * Brief overview shown in the list
+   */
+  shortDescription: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1128,6 +1166,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'team';
         value: number | Team;
+      } | null)
+    | ({
+        relationTo: 'open-jobs';
+        value: number | OpenJob;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1540,6 +1582,21 @@ export interface TeamSelect<T extends boolean = true> {
   content?: T;
   image?: T;
   linkidin?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "open-jobs_select".
+ */
+export interface OpenJobsSelect<T extends boolean = true> {
+  title?: T;
+  location?: T;
+  jobType?: T;
+  shortDescription?: T;
+  content?: T;
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
