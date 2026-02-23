@@ -8,6 +8,7 @@ import * as migration_20260223_051500_add_team_collection from './20260223_05150
 import * as migration_20260223_054800_team_content_field from './20260223_054800_team_content_field';
 import * as migration_20260223_062000_add_open_jobs_collection from './20260223_062000_add_open_jobs_collection';
 import * as migration_20260223_062100_add_generate_slug_to_open_jobs from './20260223_062100_add_generate_slug_to_open_jobs';
+import * as migration_20260223_074500_add_domain_and_work_experience_to_open_jobs from './20260223_074500_add_domain_and_work_experience_to_open_jobs';
 
 export const migrations = [
   {
@@ -59,5 +60,10 @@ export const migrations = [
     up: migration_20260223_062100_add_generate_slug_to_open_jobs.up,
     down: migration_20260223_062100_add_generate_slug_to_open_jobs.down,
     name: '20260223_062100_add_generate_slug_to_open_jobs'
+  },
+  {
+    up: migration_20260223_074500_add_domain_and_work_experience_to_open_jobs.up,
+    down: migration_20260223_074500_add_domain_and_work_experience_to_open_jobs.down,
+    name: '20260223_074500_add_domain_and_work_experience_to_open_jobs'
   },
 ];

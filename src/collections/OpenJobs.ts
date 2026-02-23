@@ -10,7 +10,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import { slugField } from 'payload'
 
-export const OpenJobs: CollectionConfig = {
+export const OpenJobs: CollectionConfig<'open-jobs'> = {
   slug: 'open-jobs',
   labels: {
     singular: 'Open Position',
@@ -31,11 +31,25 @@ export const OpenJobs: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      label: 'Job Title',
     },
     {
       name: 'location',
       type: 'text',
       required: true,
+      label: 'Location',
+      admin: {
+        placeholder: 'e.g., Kyiv, Ukraine',
+      },
+    },
+    {
+      name: 'domain',
+      type: 'text',
+      required: true,
+      label: 'Domain',
+      admin: {
+        placeholder: 'e.g., Logistics, Pharma, IT',
+      },
     },
     {
       name: 'jobType',
@@ -60,15 +74,30 @@ export const OpenJobs: CollectionConfig = {
           value: 'remote',
         },
       ],
+      label: 'Job Type',
+    },
+    {
+      name: 'workExperience',
+      type: 'text',
+      required: true,
+      label: 'Work Experience',
+      admin: {
+        placeholder: 'e.g., 2+ years in a similar role',
+      },
     },
     {
       name: 'shortDescription',
       type: 'textarea',
       required: true,
+      label: 'Short Description',
+      admin: {
+        description: 'Brief overview shown in the list',
+      },
     },
     {
       name: 'content',
       type: 'richText',
+      label: 'Job Description',
       required: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {

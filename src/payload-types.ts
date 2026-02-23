@@ -908,7 +908,12 @@ export interface OpenJob {
   id: number;
   title: string;
   location: string;
+  domain: string;
   jobType: 'full-time' | 'part-time' | 'contract' | 'remote';
+  workExperience: string;
+  /**
+   * Brief overview shown in the list
+   */
   shortDescription: string;
   content: {
     root: {
@@ -1589,7 +1594,9 @@ export interface TeamSelect<T extends boolean = true> {
 export interface OpenJobsSelect<T extends boolean = true> {
   title?: T;
   location?: T;
+  domain?: T;
   jobType?: T;
+  workExperience?: T;
   shortDescription?: T;
   content?: T;
   generateSlug?: T;
