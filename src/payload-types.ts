@@ -403,6 +403,22 @@ export interface FolderInterface {
 export interface Category {
   id: number;
   title: string;
+  shortDescription?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -1426,6 +1442,8 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
+  shortDescription?: T;
+  content?: T;
   generateSlug?: T;
   slug?: T;
   parent?: T;
