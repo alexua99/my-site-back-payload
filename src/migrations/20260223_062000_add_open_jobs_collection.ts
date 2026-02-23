@@ -16,6 +16,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     "job_type" "enum_open_jobs_job_type" DEFAULT 'full-time' NOT NULL,
     "short_description" text NOT NULL,
     "content" jsonb NOT NULL,
+    "generate_slug" boolean DEFAULT true,
     "slug" varchar,
     "updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
     "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
