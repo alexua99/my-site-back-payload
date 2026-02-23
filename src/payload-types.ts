@@ -878,7 +878,21 @@ export interface Team {
    * Select position. Director positions can only have one member.
    */
   position: 'members' | 'director_sona_pharm' | 'director_sona_exim' | 'general_director';
-  description?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   image: number | Media;
   linkidin?: string | null;
   updatedAt: string;
@@ -1523,7 +1537,7 @@ export interface TeamSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   position?: T;
-  description?: T;
+  content?: T;
   image?: T;
   linkidin?: T;
   updatedAt?: T;

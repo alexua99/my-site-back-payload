@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { authenticated } from '../access/authenticated'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const Team: CollectionConfig<'team'> = {
   slug: 'team',
@@ -57,9 +58,14 @@ export const Team: CollectionConfig<'team'> = {
       },
     },
     {
-      name: 'description',
-      type: 'textarea',
-      label: 'Description',
+      name: 'content',
+      type: 'richText',
+      label: 'Biography / Description',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => {
+          return [...rootFeatures]
+        },
+      }),
     },
     {
       name: 'image',
@@ -79,26 +85,29 @@ export const Team: CollectionConfig<'team'> = {
   ],
   hooks: {
     beforeValidate: [
-      async ({ data, req, operation }) => {
+      async ({ data, req, operation, originalDoc }) => {
         // Проверяем уникальность позиций директоров только при создании или обновлении
         if (operation === 'create' || operation === 'update') {
           const directorPositions = ['director_sona_pharm', 'director_sona_exim', 'general_director']
 
           if (data?.position && directorPositions.includes(data.position)) {
+            const whereClause: any = {
+              position: {
+                equals: data.position,
+              },
+            }
+
+            // Исключаем текущий документ при обновлении
+            if (operation === 'update' && originalDoc?.id) {
+              whereClause.id = {
+                not_equals: originalDoc.id,
+              }
+            }
+
             // Ищем существующую запись с такой же позицией директора
             const existing = await req.payload.find({
               collection: 'team',
-              where: {
-                position: {
-                  equals: data.position,
-                },
-                // Исключаем текущий документ при обновлении
-                ...(operation === 'update' && req.data?.id ? {
-                  id: {
-                    not_equals: req.data.id,
-                  },
-                } : {}),
-              },
+              where: whereClause,
               limit: 1,
             })
 
