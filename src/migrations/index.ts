@@ -10,6 +10,10 @@ import * as migration_20260223_062000_add_open_jobs_collection from './20260223_
 import * as migration_20260223_062100_add_generate_slug_to_open_jobs from './20260223_062100_add_generate_slug_to_open_jobs';
 import * as migration_20260223_074500_add_domain_and_work_experience_to_open_jobs from './20260223_074500_add_domain_and_work_experience_to_open_jobs';
 import * as migration_20260223_160119 from './20260223_160119';
+import * as migration_20260223_220000_add_section_block from './20260223_220000_add_section_block';
+import * as migration_20260223_221000_section_block_icon_text_items from './20260223_221000_section_block_icon_text_items';
+import * as migration_20260223_222000_section_block_rich_titles from './20260223_222000_section_block_rich_titles';
+import * as migration_20260223_223000_icon_text_items_rich_text from './20260223_223000_icon_text_items_rich_text';
 
 export const migrations = [
   {
@@ -71,5 +75,25 @@ export const migrations = [
     up: migration_20260223_160119.up,
     down: migration_20260223_160119.down,
     name: '20260223_160119'
+  },
+  {
+    up: migration_20260223_220000_add_section_block.up,
+    down: migration_20260223_220000_add_section_block.down,
+    name: '20260223_220000_add_section_block',
+  },
+  {
+    up: migration_20260223_221000_section_block_icon_text_items.up,
+    down: migration_20260223_221000_section_block_icon_text_items.down,
+    name: '20260223_221000_section_block_icon_text_items',
+  },
+  {
+    up: migration_20260223_222000_section_block_rich_titles.up,
+    down: migration_20260223_222000_section_block_rich_titles.down,
+    name: '20260223_222000_section_block_rich_titles',
+  },
+  {
+    up: migration_20260223_223000_icon_text_items_rich_text.up,
+    down: migration_20260223_223000_icon_text_items_rich_text.down,
+    name: '20260223_223000_icon_text_items_rich_text',
   },
 ];
