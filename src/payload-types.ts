@@ -213,53 +213,6 @@ export interface Page {
     media?: (number | null) | Media;
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
-  homeContent?: {
-    hero?: {
-      title?: string | null;
-      buttonLabel?: string | null;
-      buttonHref?: string | null;
-    };
-    ourMission?: {
-      titleBefore?: string | null;
-      titleHighlight?: string | null;
-      titleAfter?: string | null;
-      subtitle?: string | null;
-      texts?:
-        | {
-            text: string;
-            id?: string | null;
-          }[]
-        | null;
-      items?:
-        | {
-            text: string;
-            icon: string;
-            id?: string | null;
-          }[]
-        | null;
-    };
-    pharmaceutical?: {
-      title?: string | null;
-      subtitle?: string | null;
-      buttonLabel?: string | null;
-      buttonHref?: string | null;
-    };
-    product?: {
-      titleBefore?: string | null;
-      titleHighlight?: string | null;
-      titleAfter?: string | null;
-      items?:
-        | {
-            title: string;
-            text: string;
-            id?: string | null;
-          }[]
-        | null;
-    };
-    news?: {
-      title?: string | null;
-    };
-  };
   meta?: {
     title?: string | null;
     /**
@@ -1318,65 +1271,6 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
-      };
-  homeContent?:
-    | T
-    | {
-        hero?:
-          | T
-          | {
-              title?: T;
-              buttonLabel?: T;
-              buttonHref?: T;
-            };
-        ourMission?:
-          | T
-          | {
-              titleBefore?: T;
-              titleHighlight?: T;
-              titleAfter?: T;
-              subtitle?: T;
-              texts?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              items?:
-                | T
-                | {
-                    text?: T;
-                    icon?: T;
-                    id?: T;
-                  };
-            };
-        pharmaceutical?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              buttonLabel?: T;
-              buttonHref?: T;
-            };
-        product?:
-          | T
-          | {
-              titleBefore?: T;
-              titleHighlight?: T;
-              titleAfter?: T;
-              items?:
-                | T
-                | {
-                    title?: T;
-                    text?: T;
-                    id?: T;
-                  };
-            };
-        news?:
-          | T
-          | {
-              title?: T;
-            };
       };
   meta?:
     | T
